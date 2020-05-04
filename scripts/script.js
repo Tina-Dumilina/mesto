@@ -4,17 +4,24 @@ const addPlaceForm = document.forms.place;
 const cardsContainer = document.querySelector('.places-list');
 
 const editProfileButton = document.querySelector('.user-info__button_edit');
+const editProfileForm = document.forms.profile;
 
-(function showInitialCards() {
+(function() {
   initialCards.forEach(obj => cardsContainer.insertAdjacentHTML('beforeend', getTemplate(obj)));
+})();
+
+(function() {
+  const {userName, userJob} = editProfileForm.elements;
+  userName.value = document.querySelector('.user-info__name').textContent;
+  userJob.value = document.querySelector('.user-info__job').textContent;
 })();
 
 function togglePopup(selector) {
   const popup = document.querySelector(selector);
-  popup.classList.add('popup_is-opened');
+  popup.classList.toggle('popup_is-opened');
 
   const closeButton = popup.querySelector('.popup__close');
-  closeButton.addEventListener('click', () => popup.classList.remove('popup_is-opened'));
+  closeButton.addEventListener('click', () => popup.classList.toggle('popup_is-opened'));
 }
 
 function getTemplate(data) {
@@ -36,15 +43,16 @@ function getTemplate(data) {
 function addCard(event) {
   event.preventDefault();
 
+  const {name, link} = addPlaceForm.elements;
   const card = {
-    name: addPlaceForm.elements.name.value,
-    link: addPlaceForm.elements.link.value
-  }
+    name: name.value,
+    link: link.value
+  };
 
   cardsContainer.insertAdjacentHTML('beforeend', getTemplate(card));
 
   addPlaceForm.reset();
-  toggleAddPlacePopup();
+  togglePopup('.popup_add-place');
 }
 
 function interactWithCard(e) {
@@ -60,9 +68,21 @@ function interactWithCard(e) {
   }
 }
 
+function editProfile(event) {
+  event.preventDefault();
+
+  const {userName, userJob} = editProfileForm.elements;
+
+  document.querySelector('.user-info__name').textContent = userName.value;
+  document.querySelector('.user-info__job').textContent = userJob.value;
+
+  togglePopup('.popup_edit-profile');
+}
+
 addPlaceButton.addEventListener('click', () => togglePopup('.popup_add-place'));
 addPlaceForm.addEventListener('submit', addCard);
 
 cardsContainer.addEventListener('click', interactWithCard);
 
 editProfileButton.addEventListener('click', () => togglePopup('.popup_edit-profile'));
+editProfileForm.addEventListener('submit', editProfile);
