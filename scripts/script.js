@@ -1,4 +1,4 @@
-const showPopupButton = document.querySelector('.user-info__button');
+const addPlacePopupButton = document.querySelector('.user-info__button_add');
 
 const closePopupButton = document.querySelector('.popup__close');
 const addButton = document.querySelector('.popup__button');
@@ -65,5 +65,5 @@ form.addEventListener('submit', addCard);
 
 cardsContainer.addEventListener('click', interactWithCard);
 
-showPopupButton.addEventListener('click', togglePopup);
+addPlacePopupButton.addEventListener('click', togglePopup);
 closePopupButton.addEventListener('click', togglePopup);
