@@ -30,15 +30,28 @@
 
     <div class="places-list root__section"></div>
 
-    <div class="popup">
+    <div class="popup popup_add-place">
       <div class="popup__content">
-        <img src="./images/close.svg" alt="" class="popup__close">
+        <img src="./images/close.svg" alt="Закрыть" class="popup__close">
         <h3 class="popup__title">Новое место</h3>
-        <form class="popup__form" name="new">
+        <form class="popup__form" name="place">
           <input type="text" name="name" class="popup__input popup__input_type_name" placeholder="Название" required>
           <input type="URL" name="link" class="popup__input popup__input_type_link-url" placeholder="Ссылка на картинку"
             required>
           <button type class="button popup__button">+</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="popup popup_edit-profile">
+      <div class="popup__content">
+        <img src="./images/close.svg" alt="Закрыть" class="popup__close">
+        <h3 class="popup__title">Редактировать профиль</h3>
+        <form class="popup__form" name="profile">
+          <input type="text" name="userName" class="popup__input popup__input_type_user-name" placeholder="Имя" required>
+          <input type="text" name="userDescr" class="popup__input popup__input_user-descr" placeholder="Обо мне"
+            required>
+          <button type class="button popup__button popup__button_edit-profile">Сохранить</button>
         </form>
       </div>
     </div>

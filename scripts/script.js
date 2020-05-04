@@ -1,17 +1,22 @@
-const addPlacePopupButton = document.querySelector('.user-info__button_add');
+const addPlaceButton = document.querySelector('.user-info__button_add');
+const addPlaceForm = document.forms.place;
 
-const closePopupButton = document.querySelector('.popup__close');
-const addButton = document.querySelector('.popup__button');
-const form = document.forms.new;
 const cardsContainer = document.querySelector('.places-list');
+
+const editProfileButton = document.querySelector('.user-info__button_edit');
 
 function showInitialCards() {
   initialCards.forEach(obj => cardsContainer.insertAdjacentHTML('beforeend', getTemplate(obj)));
 }
 
-function togglePopup() {
-  const popup = document.querySelector('.popup');
-  popup.classList.toggle('popup_is-opened');
+function toggleAddPlacePopup() {
+  const addPlacePopup = document.querySelector('.popup_add-place');
+  addPlacePopup.classList.toggle('popup_is-opened');
+}
+
+function toggleEditProfilePopup() {
+  const editProfilePopup = document.querySelector('.popup_edit-profile');
+  editProfilePopup.classList.toggle('popup_is-opened');
 }
 
 function getTemplate(data) {
@@ -34,16 +39,14 @@ function addCard(event) {
   event.preventDefault();
 
   const card = {
-    name: form.elements.name.value,
-    link: form.elements.link.value
+    name: addPlaceForm.elements.name.value,
+    link: addPlaceForm.elements.link.value
   }
 
-  if (card.name)
+  cardsContainer.insertAdjacentHTML('beforeend', getTemplate(card));
 
-    cardsContainer.insertAdjacentHTML('beforeend', getTemplate(card));
-
-  form.reset();
-  togglePopup();
+  addPlaceForm.reset();
+  toggleAddPlacePopup();
 }
 
 function interactWithCard(e) {
@@ -61,9 +64,12 @@ function interactWithCard(e) {
 
 window.onload = showInitialCards;
 
-form.addEventListener('submit', addCard);
+addPlaceForm.addEventListener('submit', addCard);
 
 cardsContainer.addEventListener('click', interactWithCard);
 
-addPlacePopupButton.addEventListener('click', togglePopup);
-closePopupButton.addEventListener('click', togglePopup);
+addPlaceButton.addEventListener('click', toggleAddPlacePopup);
+
+editProfileButton.addEventListener('click', toggleEditProfilePopup);
+
+closePopupButton.addEventListener('click', toggleEditProfilePopup);
