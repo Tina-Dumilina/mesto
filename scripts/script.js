@@ -20,14 +20,26 @@ function togglePopup(selector) {
   const popup = document.querySelector(selector);
   popup.classList.toggle('popup_is-opened');
 
-  const closeButton = popup.querySelector('.popup__close');
-  closeButton.addEventListener('click', () => popup.classList.toggle('popup_is-opened'));
+  popup.querySelector('.popup__close').addEventListener('click', () => popup.classList.remove('popup_is-opened'));
 }
 
 function getTemplate(data) {
+  // const template = `
+  //   <div class="place-card"> 
+  //     <div class="place-card__image" style="background: url(${data.link})"> 
+  //       <button class="place-card__delete-icon"></button>
+  //     </div>
+  //     <div class="place-card__description">
+  //       <h3 class="place-card__name">${data.name}</h3>
+  //       <button class="place-card__like-icon"></button>
+  //     </div>
+  //   </div>
+  // `;
+
   const template = `
     <div class="place-card"> 
-      <div class="place-card__image" style="background: url(${data.link})"> 
+      <div class="place-card__container">
+        <img src="${data.link}" alt="" class="place-card__image">
         <button class="place-card__delete-icon"></button>
       </div>
       <div class="place-card__description">
@@ -65,6 +77,17 @@ function interactWithCard(e) {
 
   if (target.classList.contains('place-card__like-icon')) {
     target.classList.toggle('place-card__like-icon_liked');
+  }
+
+  if (target.classList.contains('place-card__image')) {
+    const imageLink = target.getAttribute('src');
+    const popup = document.querySelector('.image-popup');
+    
+    popup.classList.add('image-popup_is-opened');
+    popup.querySelector('.image-popup__image').setAttribute('src', imageLink);
+
+    const closeBtn = popup.querySelector('.image-popup__close');
+    closeBtn.addEventListener('click', () => popup.classList.remove('image-popup_is-opened'));
   }
 }
 
