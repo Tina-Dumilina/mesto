@@ -1,19 +1,2 @@
 @import url(./__image/image-popup__image.css);
 @import url(./__container/image-popup__container.css);
-
-.image-popup {
-	position: fixed;
-	top: 0;
-	left: 0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 100%;
-	height: 100%;
-	display: none;
-	background-color: rgba(0, 0, 0, .5);
-}
-
-.image-popup_is-opened {
-	display: flex;
-}

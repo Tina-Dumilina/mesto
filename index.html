@@ -7,7 +7,9 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Mesto</title>
   <link rel="stylesheet" href="./pages/index.css">
+  <script src="scripts/addCard.js" defer></script>
   <script src="scripts/initialCards.js" defer></script>
+  <script src="scripts/showImagePopup.js" defer></script>
   <script src="scripts/script.js" defer></script>
 </head>
 
@@ -30,34 +32,47 @@
 
     <div class="places-list root__section"></div>
 
-    <div class="popup popup_add-place">
+    <div class="popup popup_type_place">
       <div class="popup__content">
         <img src="./images/close.svg" alt="Закрыть" class="popup__close">
         <h3 class="popup__title">Новое место</h3>
-        <form class="popup__form" name="place">
-          <input type="text" name="name" class="popup__input popup__input_type_name" placeholder="Название" required>
-          <input type="URL" name="link" class="popup__input popup__input_type_link-url" placeholder="Ссылка на картинку"
-            required>
+        <form class="popup__form" name="place" novalidate>
+          <div class="popup__input-container">
+            <input type="text" name="name" class="popup__input popup__input_type_name" placeholder="Название" minlength="2" maxlength="30" required>
+            <p class="popup__error-message" role="status" aria-live="polite"></p>
+          </div>
+          
+          <div class="popup__input-container">
+            <input type="URL" name="link" class="popup__input popup__input_type_link-url" placeholder="Ссылка на картинку" required>
+            <p class="popup__error-message" role="status" aria-live="polite"></p>
+          </div>
+
           <button type="submit" class="button popup__button" aria-label="Добавить место">+</button>
         </form>
       </div>
     </div>
 
-    <div class="popup popup_edit-profile">
+    <div class="popup popup_type_profile">
       <div class="popup__content">
         <img src="./images/close.svg" alt="Закрыть" class="popup__close">
         <h3 class="popup__title">Редактировать профиль</h3>
-        <form class="popup__form" name="profile">
-          <input type="text" name="userName" class="popup__input popup__input_type_user-name" placeholder="Имя"
-            required>
-          <input type="text" name="userJob" class="popup__input popup__input_user-job" placeholder="Обо мне" required>
+        <form class="popup__form" name="profile" novalidate>
+          <div class="popup__input-container">
+            <input type="text" name="userName" class="popup__input popup__input_type_user-name" placeholder="Имя" minlength="2" maxlength="30" required>
+            <p class="popup__error-message" role="status" aria-live="polite"></p>
+          </div>
+
+          <div class="popup__input-container">
+            <input type="text" name="userJob" class="popup__input popup__input_user-job" placeholder="Обо мне" minlength="2" maxlength="30" required>
+            <p class="popup__error-message" role="status" aria-live="polite"></p>
+          </div>
           <button type="submit" class="button popup__button popup__button_edit-profile"
             aria-label="Сохранить изменения">Сохранить</button>
         </form>
       </div>
     </div>
 
-    <div class="image-popup">
+    <div class="popup popup_type_image image-popup">
       <div class="image-popup__container">
         <img class="image-popup__image" alt="" src="">
         <img src="./images/close.svg" alt="Закрыть" class="image-popup__close popup__close">

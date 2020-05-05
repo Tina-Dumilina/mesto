@@ -1,8 +1,6 @@
 const addPlaceButton = document.querySelector('.user-info__button_add');
 const addPlaceForm = document.forms.place;
-
 const cardsContainer = document.querySelector('.places-list');
-
 const editProfileButton = document.querySelector('.user-info__button_edit');
 const editProfileForm = document.forms.profile;
 
@@ -23,51 +21,7 @@ function togglePopup(selector) {
   popup.querySelector('.popup__close').addEventListener('click', () => popup.classList.remove('popup_is-opened'));
 }
 
-function getTemplate(data) {
-  // const template = `
-  //   <div class="place-card"> 
-  //     <div class="place-card__image" style="background: url(${data.link})"> 
-  //       <button class="place-card__delete-icon"></button>
-  //     </div>
-  //     <div class="place-card__description">
-  //       <h3 class="place-card__name">${data.name}</h3>
-  //       <button class="place-card__like-icon"></button>
-  //     </div>
-  //   </div>
-  // `;
-
-  const template = `
-    <div class="place-card"> 
-      <div class="place-card__container">
-        <img src="${data.link}" alt="" class="place-card__image">
-        <button class="place-card__delete-icon"></button>
-      </div>
-      <div class="place-card__description">
-        <h3 class="place-card__name">${data.name}</h3>
-        <button class="place-card__like-icon"></button>
-      </div>
-    </div>
-  `;
-
-  return template;
-}
-
-function addCard(event) {
-  event.preventDefault();
-
-  const {name, link} = addPlaceForm.elements;
-  const card = {
-    name: name.value,
-    link: link.value
-  };
-
-  cardsContainer.insertAdjacentHTML('beforeend', getTemplate(card));
-
-  addPlaceForm.reset();
-  togglePopup('.popup_add-place');
-}
-
-function interactWithCard(e) {
+function controlSingleCard(e) {
   let target = e.target;
 
   if (target.classList.contains('place-card__delete-icon')) {
@@ -78,34 +32,23 @@ function interactWithCard(e) {
   if (target.classList.contains('place-card__like-icon')) {
     target.classList.toggle('place-card__like-icon_liked');
   }
-
-  if (target.classList.contains('place-card__image')) {
-    const imageLink = target.getAttribute('src');
-    const popup = document.querySelector('.image-popup');
-    
-    popup.classList.add('image-popup_is-opened');
-    popup.querySelector('.image-popup__image').setAttribute('src', imageLink);
-
-    const closeBtn = popup.querySelector('.image-popup__close');
-    closeBtn.addEventListener('click', () => popup.classList.remove('image-popup_is-opened'));
-  }
 }
 
 function editProfile(event) {
   event.preventDefault();
 
   const {userName, userJob} = editProfileForm.elements;
-
   document.querySelector('.user-info__name').textContent = userName.value;
   document.querySelector('.user-info__job').textContent = userJob.value;
 
-  togglePopup('.popup_edit-profile');
+  togglePopup('.popup_type_profile');
 }
 
-addPlaceButton.addEventListener('click', () => togglePopup('.popup_add-place'));
+addPlaceButton.addEventListener('click', () => togglePopup('.popup_type_place'));
 addPlaceForm.addEventListener('submit', addCard);
 
-cardsContainer.addEventListener('click', interactWithCard);
+cardsContainer.addEventListener('click', controlSingleCard);
+cardsContainer.addEventListener('click', showImagePopup);
 
-editProfileButton.addEventListener('click', () => togglePopup('.popup_edit-profile'));
+editProfileButton.addEventListener('click', () => togglePopup('.popup_type_profile'));
 editProfileForm.addEventListener('submit', editProfile);
