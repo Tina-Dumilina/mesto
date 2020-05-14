@@ -1,5 +1,5 @@
 function getTemplate(data) {
-  const template = `
+  return `
   <div class="place-card"> 
     <div style="background-image: url(${data.link})" class="place-card__image">
       <button class="place-card__delete-icon"></button>
@@ -10,21 +10,21 @@ function getTemplate(data) {
     </div>
   </div>
 `;
-
-  return template;
 }
 
 function addCard(event) {
   event.preventDefault();
+  const isValid = isFormValid(formAddPlace);
 
-  const {name, link} = addPlaceForm.elements;
-  const card = {
-    name: name.value,
-    link: link.value
-  };
+  if (isValid) {
+    const {name, link} = formAddPlace.elements;
+    const card = {
+      name: name.value,
+      link: link.value
+    };
 
-  cardsContainer.insertAdjacentHTML('beforeend', getTemplate(card));
-
-  addPlaceForm.reset();
-  togglePopup('.popup_add-place');
+    cardsContainer.insertAdjacentHTML('beforeend', getTemplate(card));
+    formAddPlace.reset();
+    togglePopup('.popup_type_place');
+  }
 }

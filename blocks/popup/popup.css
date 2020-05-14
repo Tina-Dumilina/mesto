@@ -6,7 +6,6 @@
 @import url(./__button/popup__button.css);
 @import url(./__button/_edit-profile/popup__button_edit-profile.css);
 @import url(./_is-opened/popup_is-opened.css);
-@import url(./__input-container/popup__input-container.css);
 @import url(./__error-message/popup__error-message.css);
 
 .popup {

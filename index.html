@@ -8,6 +8,7 @@
   <title>Mesto</title>
   <link rel="stylesheet" href="./pages/index.css">
   <script src="scripts/addCard.js" defer></script>
+  <script src="scripts/formValidation.js" defer></script>
   <script src="scripts/initialCards.js" defer></script>
   <script src="scripts/showImagePopup.js" defer></script>
   <script src="scripts/script.js" defer></script>
@@ -37,17 +38,13 @@
         <img src="./images/close.svg" alt="Закрыть" class="popup__close">
         <h3 class="popup__title">Новое место</h3>
         <form class="popup__form" name="place" novalidate>
-          <div class="popup__input-container">
-            <input type="text" name="name" class="popup__input popup__input_type_name" placeholder="Название" minlength="2" maxlength="30" required>
-            <p class="popup__error-message" role="status" aria-live="polite"></p>
-          </div>
+          <input type="text" id="card-name" name="name" class="popup__input popup__input_type_name" placeholder="Название" minlength="2" maxlength="30" required>
+          <span id="card-name-error" class="popup__error-message" role="status" aria-live="polite"></span>
           
-          <div class="popup__input-container">
-            <input type="URL" name="link" class="popup__input popup__input_type_link-url" placeholder="Ссылка на картинку" required>
-            <p class="popup__error-message" role="status" aria-live="polite"></p>
-          </div>
+          <input type="URL" id="link" name="link" class="popup__input popup__input_type_link-url" placeholder="Ссылка на картинку" required>
+          <span id="link-error" class="popup__error-message" role="status" aria-live="polite"></span>
 
-          <button type="submit" class="button popup__button" aria-label="Добавить место">+</button>
+          <button type="submit" class="button popup__button" aria-label="Добавить место" disabled>+</button>
         </form>
       </div>
     </div>
@@ -57,17 +54,14 @@
         <img src="./images/close.svg" alt="Закрыть" class="popup__close">
         <h3 class="popup__title">Редактировать профиль</h3>
         <form class="popup__form" name="profile" novalidate>
-          <div class="popup__input-container">
-            <input type="text" name="userName" class="popup__input popup__input_type_user-name" placeholder="Имя" minlength="2" maxlength="30" required>
-            <p class="popup__error-message" role="status" aria-live="polite"></p>
-          </div>
 
-          <div class="popup__input-container">
-            <input type="text" name="userJob" class="popup__input popup__input_user-job" placeholder="Обо мне" minlength="2" maxlength="30" required>
-            <p class="popup__error-message" role="status" aria-live="polite"></p>
-          </div>
-          <button type="submit" class="button popup__button popup__button_edit-profile"
-            aria-label="Сохранить изменения">Сохранить</button>
+          <input type="text" id="user-name" name="userName" class="popup__input popup__input_type_user-name" placeholder="Имя" minlength="2" maxlength="30" required>
+          <span id="user-name-error" class="popup__error-message" role="status" aria-live="polite"></span>
+
+          <input type="text" id="job" name="userJob" class="popup__input popup__input_user-job" placeholder="Обо мне" minlength="2" maxlength="30" required>
+          <span id="job-error" class="popup__error-message" role="status" aria-live="polite"></span>
+
+          <button type="submit" class="button popup__button popup__button_edit-profile" aria-label="Сохранить изменения">Сохранить</button>
         </form>
       </div>
     </div>
