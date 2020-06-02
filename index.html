@@ -7,10 +7,14 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Mesto</title>
   <link rel="stylesheet" href="./pages/index.css">
-  <script src="scripts/addCard.js" defer></script>
-  <script src="scripts/formValidation.js" defer></script>
+  <script src="scripts/CardList.js" defer></script>
+  <script src="scripts/Card.js" defer></script>
+  <script src="scripts/Popup.js" defer></script>
+  <script src="scripts/PopupForm.js" defer></script>
+  <script src="scripts/PopupImage.js" defer></script>
+  <script src="scripts/FormValidator.js" defer></script>
+  <script src="scripts/UserInfo.js" defer></script>
   <script src="scripts/initialCards.js" defer></script>
-  <script src="scripts/showImagePopup.js" defer></script>
   <script src="scripts/script.js" defer></script>
 </head>
 
@@ -73,6 +77,18 @@
       </div>
     </div>
   </div>
+
+  <template id="place-card" style="display: none;">
+    <div class="place-card">
+      <div style="background-image: url(${link})" class="place-card__image">
+        <button class="place-card__delete-icon"></button>
+      </div>
+      <div class="place-card__description">
+        <h3 class="place-card__name">${name}</h3>
+        <button class="place-card__like-icon"></button>
+      </div>
+    </div>
+  </template>
 
 </body>
 

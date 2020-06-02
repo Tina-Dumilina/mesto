@@ -1,76 +1,60 @@
+//DOM-элементы
+const addPlaceButton = document.querySelector('.user-info__button_add');
+const editProfileButton = document.querySelector('.user-info__button_edit');
 const formAddPlace = document.forms.place;
 const formEditProfile = document.forms.profile;
 
-const cardsContainer = document.querySelector('.places-list');
+//Функции-хэлперы
+const createCard = (...arg) => new Card(...arg).create();
+const createUserProfile = () => new UserInfo();
+const createPopupImage = (...arg) => new PopupImage(...arg).open();
+const createFormValidator = (...arg) => new FormValidator(...arg);
 
-const addPlaceButton = document.querySelector('.user-info__button_add');
-const editProfileButton = document.querySelector('.user-info__button_edit');
+//Инстансы
+const addPlacePopup = new PopupForm(document.querySelector('.popup_type_place'), null, createFormValidator);
 
-initialCards.forEach(obj => cardsContainer.insertAdjacentHTML('beforeend', getTemplate(obj)));
+const editProfilePopup = new PopupForm(document.querySelector('.popup_type_profile'), createUserProfile, createFormValidator);
 
-function fillEditProfileInputs () {
-  const {userName, userJob} = formEditProfile.elements;
-  userName.value = document.querySelector('.user-info__name').textContent;
-  userJob.value = document.querySelector('.user-info__job').textContent;
-}
+const cardList = new CardList(document.querySelector('.places-list'));
+cardList.render(initialCards, createCard, createPopupImage);
 
-function togglePopup(selector) {
-  const popup = document.querySelector(selector);
-  popup.classList.toggle('popup_is-opened');
+const userInfo = new UserInfo();
+userInfo.updateUserInfo();
 
-  if (selector === '.popup_type_place') {
-    const button = popup.querySelector('.popup__button');
-    setSubmitButtonState(button, false);
-  }
+const addPlaceFormValidator = new FormValidator(formAddPlace);
+const editProfileFormValidator = new FormValidator(formEditProfile);
 
-  popup.querySelector('.popup__close').addEventListener('click', () => {
-    popup.classList.remove('popup_is-opened');
-    const form = popup.querySelector('.popup__form');
-    [...form.elements].forEach(input => resetError(input));
-
-    if (selector === '.popup_type_place') {
-      form.reset();
-    } else {
-      fillEditProfileInputs();
-    }
-  });
-}
-
-function likeAndDeleteCard(e) {
-  const target = e.target;
-  if (target.classList.contains('place-card__delete-icon')) {
-    let currentCard = target.closest('.place-card');
-    currentCard.remove();
-  }
-
-  if (target.classList.contains('place-card__like-icon')) {
-    target.classList.toggle('place-card__like-icon_liked');
-  }
-}
-
-function editProfile(event) {
+//Добавление карточки
+formAddPlace.addEventListener('submit', (event) => {
   event.preventDefault();
-  const isValid = isFormValid(formEditProfile);
+  const isValid = addPlaceFormValidator.isFormValid();
 
   if (isValid) {
-    const {userName, userJob} = formEditProfile.elements;
-    document.querySelector('.user-info__name').textContent = userName.value;
-    document.querySelector('.user-info__job').textContent = userJob.value;
-
-    togglePopup('.popup_type_profile');
+    const card = {
+      name: formAddPlace.elements.name.value,
+      link: formAddPlace.elements.link.value
+    };
+    const cardInstance = new Card(card, createPopupImage);
+    cardList.addCard(cardInstance.create());
+    formAddPlace.reset();
+    addPlacePopup.close();
   }
-}
+});
 
-window.onload = fillEditProfileInputs;
+//Редактирование профиля
+formEditProfile.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const isValid = editProfileFormValidator.isFormValid();
 
-addPlaceButton.addEventListener('click', () => togglePopup('.popup_type_place'));
-editProfileButton.addEventListener('click', () => togglePopup('.popup_type_profile'));
+  if (isValid) {
+    userInfo.setUserInfo();
+    editProfilePopup.close();
+  }
+});
 
-formEditProfile.addEventListener('submit', editProfile);
-formEditProfile.addEventListener('input', setEventListeners);
+//Слушатели событий
+addPlaceButton.addEventListener('click', () => addPlacePopup.open());
+editProfileButton.addEventListener('click', () => editProfilePopup.open());
 
-formAddPlace.addEventListener('submit', addCard);
-formAddPlace.addEventListener('input', setEventListeners);
-
-cardsContainer.addEventListener('click', likeAndDeleteCard);
-cardsContainer.addEventListener('click', showImagePopup);
+formAddPlace.addEventListener('input', (e) => addPlaceFormValidator.setEventListeners(e));
+formEditProfile.addEventListener('input', (e) => editProfileFormValidator.setEventListeners(e));
